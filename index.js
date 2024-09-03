@@ -29,6 +29,7 @@ async function run() {
 
     const menuCollection = client.db("cafeDb").collection("menu");
     const reviewCollection = client.db("cafeDb").collection("reviews");
+    const cartCollection = client.db("cafeDb").collection("carts");
 
 
     app.get('/menu', async(req, res) => {
@@ -39,6 +40,13 @@ async function run() {
     app.get('/review', async(req, res) => {
         const result = await reviewCollection.find().toArray();
         res.send(result);
+    });
+
+    // cart api
+    app.post('/carts', async(req, res) => {
+      const cartItem = req.body;
+      const result = await cartCollection.insertOne(cartItem);
+      res.send(result);
     });
 
 
